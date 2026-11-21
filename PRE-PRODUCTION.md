@@ -300,12 +300,8 @@ Tidak ada folder `src/content`. Data cukup berupa file TypeScript.
    - build command `npm run build`
    - output directory `dist`
    - `NODE_VERSION = 24`
-6. Deploy lewat GitHub connect untuk auto deploy, atau manual:
-   ```powershell
-   npm run build
-   npx wrangler pages deploy dist --project-name eleda-website
-   ```
-7. Domain `eleda.web.id` ditambahkan di Cloudflare Pages. DNS diarahkan lewat Cloudflare.
+6. Deploy lewat GitHub connect, atau manual dengan `npm run deploy` yang menjalankan `wrangler deploy` memakai `wrangler.jsonc`.
+7. Domain `eleda.web.id` ditambahkan di Cloudflare lewat dashboard atau API Workers. DNS diarahkan lewat Cloudflare.
 8. Aktifkan HTTPS, lalu cek `www` diarahkan ke apex.
 
 Preview lokal memakai dev server Astro atau `npx serve dist`.
