@@ -1,0 +1,47 @@
+---
+import { site } from '../data/site';
+import { ui, waLink } from '../i18n/ui';
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+const wa = waLink(lang);
+---
+
+<section class="hero" aria-labelledby="hero-title">
+  <img
+    class="hero__media"
+    src="/hero.webp"
+    alt={t.hero.alt}
+    width="1600"
+    height="1067"
+    fetchpriority="high"
+    decoding="async"
+  />
+  <div class="hero__scrim" aria-hidden="true"></div>
+
+  <div class="hero__content">
+    <p class="status">{site.openForCommission ? t.hero.statusOpen : t.hero.statusClosed}</p>
+
+    <h1 class="hero__title" id="hero-title">{t.hero.title}</h1>
+    <p class="hero__sub">{t.hero.sub}</p>
+
+    <div class="hero__actions">
+      <a
+        class="btn btn--primary btn--on-dark"
+        href={wa}
+        target="_blank"
+        rel="noopener"
+        data-wa
+        data-wa-location="hero"
+      >
+        {t.hero.primary}
+      </a>
+      <a class="hero__link" href="#work">{t.hero.secondary}</a>
+    </div>
+  </div>
+</section>

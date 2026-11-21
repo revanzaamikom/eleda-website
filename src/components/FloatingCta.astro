@@ -1,0 +1,23 @@
+---
+import { ui, waLink } from '../i18n/ui';
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+---
+
+<a
+  class="floating-cta"
+  href={waLink(lang)}
+  target="_blank"
+  rel="noopener"
+  data-wa
+  data-wa-location="floating"
+  aria-label={t.wa.openLabel}
+>
+  {t.hero.primary}
+</a>

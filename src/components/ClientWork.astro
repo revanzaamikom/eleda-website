@@ -1,0 +1,55 @@
+---
+import { clientGroups } from '../data/works';
+import { ui } from '../i18n/ui';
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+const railLabel = lang === 'id' ? 'Geser untuk lihat karya lain' : 'Scroll to see more work';
+---
+
+<section class="section" id="clients" aria-labelledby="clients-title">
+  <div class="shell">
+    <div class="section-head">
+      <h2 class="section-title" id="clients-title">{t.client.title}</h2>
+      <p class="section-sub">{t.client.sub}</p>
+    </div>
+
+    {
+      clientGroups.map((group) => (
+        <div class="category-block">
+          <div class="category-head">
+            <h3 class="category-heading">{group.label[lang]}</h3>
+            <span class="category-count">{group.works.length} {t.work.count[lang]}</span>
+          </div>
+
+          <div class="work-rail" role="region" tabindex="0" aria-label={`${group.label[lang]}, ${railLabel}`}>
+            {group.works.map((work) => (
+              <figure class="work-card">
+                <div class="work-card__frame">
+                  <img
+                    class="work-card__media"
+                    src={work.image}
+                    alt={work.alt[lang]}
+                    width={work.width}
+                    height={work.height}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <figcaption class="work-card__caption">
+                  <span class="work-card__name">{work.title[lang]}</span>
+                  <span class="work-card__meta">{String(work.year)}</span>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>

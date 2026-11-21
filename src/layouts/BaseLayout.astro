@@ -1,0 +1,272 @@
+---
+import '../styles/global.css';
+import { meta } from '../config/meta';
+import MetaPixel from '../components/MetaPixel.astro';
+import { site } from '../data/site';
+import { ui } from '../i18n/ui';
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description: string;
+  path: string;
+  ogImage: string;
+  ogAlt: string;
+  noindex?: boolean;
+  extraJsonLd?: Record<string, unknown>;
+}
+
+const {
+  lang,
+  title,
+  description,
+  path,
+  ogImage,
+  ogAlt,
+  noindex = false,
+  extraJsonLd,
+} = Astro.props;
+
+const base = Astro.site ?? new URL('https://eleda.web.id');
+const canonical = new URL(path, base).href;
+const ogImageUrl = new URL(ogImage, base).href;
+const idUrl = new URL('/id/', base).href;
+const enUrl = new URL('/', base).href;
+const locale = site.locales[lang];
+const altLocale = site.locales[lang === 'id' ? 'en' : 'id'];
+
+const skipLabel = lang === 'id' ? 'Lewati ke konten' : 'Skip to content';
+
+const organization = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: site.name,
+  url: site.url,
+  image: ogImageUrl,
+  description,
+  areaServed: 'Worldwide',
+  availableLanguage: ['id', 'en'],
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: lang === 'id' ? 'Jenis desain' : 'Design types',
+    itemListElement: [
+      { '@type': 'Service', name: ui[lang].categories.clothing[lang] },
+      { '@type': 'Service', name: ui[lang].categories.character[lang] },
+      { '@type': 'Service', name: ui[lang].categories.logo[lang] },
+    ],
+  },
+  contactPoint: {
+    '@type': 'ContactPoint',
+    contactType: 'customer service',
+    telephone: `+${site.whatsapp}`,
+    url: `https://wa.me/${site.whatsapp}`,
+    availableLanguage: ['id', 'en'],
+  },
+};
+
+const structuredData = extraJsonLd
+  ? [organization, extraJsonLd]
+  : [organization];
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    {
+      !noindex && (
+        <>
+          <link rel="alternate" hreflang="id" href={idUrl} />
+          <link rel="alternate" hreflang="en" href={enUrl} />
+          <link rel="alternate" hreflang="x-default" href={enUrl} />
+        </>
+      )
+    }
+
+    <meta
+      name="robots"
+      content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large'}
+    />
+    <meta name="theme-color" content="#F5F4F1" />
+    <meta name="format-detection" content="telephone=no" />
+    {meta.domainVerification && (
+      <meta name="facebook-domain-verification" content={meta.domainVerification} />
+    )}
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogAlt} />
+    <meta property="og:locale" content={locale} />
+    <meta property="og:locale:alternate" content={altLocale} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="twitter:image:alt" content={ogAlt} />
+
+    <MetaPixel />
+
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+  </head>
+  <body>
+    <a class="skip" href="#main">{skipLabel}</a>
+    <slot />
+    {meta.enabled && (
+      <noscript>
+        <img
+          height="1"
+          width="1"
+          style="display:none"
+          src={`https://www.facebook.com/tr?id=${meta.pixelId}&ev=PageView&noscript=1`}
+          alt=""
+        />
+      </noscript>
+    )}
+    <script is:inline>
+      var sectionHash = window.location.hash;
+      if (/^#(work|clients|process|faq|about)$/.test(sectionHash)) {
+        document.querySelectorAll('a[data-lang-toggle]').forEach(function (link) {
+          link.href = link.getAttribute('href') + sectionHash;
+        });
+      }
+
+      document.addEventListener('click', function (event) {
+        var link = event.target && event.target.closest ? event.target.closest('a[data-wa]') : null;
+        if (!link) return;
+
+        var location = link.getAttribute('data-wa-location') || 'whatsapp';
+        var language = document.documentElement.lang || 'id';
+
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: 'whatsapp_click',
+          wa_location: location,
+          language: language,
+        });
+
+        if (typeof window.fbq === 'function') {
+          window.fbq('track', 'Contact', {
+            content_name: location,
+            content_category: language,
+          });
+        }
+      });
+
+      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      document.querySelectorAll('.work-rail').forEach(function (rail) {
+        var animating = false;
+
+        function positions() {
+          var max = rail.scrollWidth - rail.clientWidth;
+          var railLeft = rail.getBoundingClientRect().left;
+          return Array.prototype.map.call(
+            rail.querySelectorAll('.work-card'),
+            function (card) {
+              var left = card.getBoundingClientRect().left - railLeft + rail.scrollLeft;
+              return Math.max(0, Math.min(max, left));
+            },
+          );
+        }
+
+        function nearestIndex(list) {
+          var best = 0;
+          var bestDistance = Infinity;
+          list.forEach(function (value, index) {
+            var distance = Math.abs(value - rail.scrollLeft);
+            if (distance < bestDistance) {
+              bestDistance = distance;
+              best = index;
+            }
+          });
+          return best;
+        }
+
+        function animateTo(target) {
+          if (reduceMotion) {
+            rail.scrollLeft = target;
+            return;
+          }
+
+          var start = rail.scrollLeft;
+          var distance = target - start;
+          var duration = 300;
+          var startTime = null;
+
+          animating = true;
+          rail.style.scrollSnapType = 'none';
+
+          function frame(time) {
+            if (startTime === null) startTime = time;
+            var progress = Math.min(1, (time - startTime) / duration);
+            var eased = 1 - Math.pow(1 - progress, 3);
+            rail.scrollLeft = start + distance * eased;
+
+            if (progress < 1) {
+              requestAnimationFrame(frame);
+            } else {
+              rail.scrollLeft = target;
+              rail.style.scrollSnapType = '';
+              animating = false;
+            }
+          }
+
+          requestAnimationFrame(frame);
+        }
+
+        rail.addEventListener(
+          'wheel',
+          function (event) {
+            if (event.ctrlKey || event.deltaX !== 0 || !event.deltaY) return;
+            event.preventDefault();
+
+            if (animating) return;
+
+            var max = rail.scrollWidth - rail.clientWidth;
+            if (max <= 0) return;
+
+            var multiplier = 1;
+            if (event.deltaMode === 1) multiplier = 16;
+            if (event.deltaMode === 2) multiplier = rail.clientWidth;
+            var step = event.deltaY * multiplier;
+
+            var list = positions();
+            var index = nearestIndex(list);
+            var next = index + (step > 0 ? 1 : -1);
+
+            if (next < 0 || next >= list.length) {
+              window.scrollTo(0, window.scrollY + step);
+              return;
+            }
+
+            var target = list[next];
+            if (Math.abs(target - rail.scrollLeft) < 1) {
+              window.scrollTo(0, window.scrollY + step);
+              return;
+            }
+
+            animateTo(target);
+          },
+          { passive: false },
+        );
+      });
+    </script>
+  </body>
+</html>

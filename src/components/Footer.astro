@@ -1,0 +1,30 @@
+---
+import { site } from '../data/site';
+import { ui, waLink } from '../i18n/ui';
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+const wa = waLink(lang);
+---
+
+<footer class="footer">
+  <div class="shell footer__inner">
+    <p>{t.footer.line}</p>
+    <a
+      href={wa}
+      target="_blank"
+      rel="noopener"
+      data-wa
+      data-wa-location="footer"
+      aria-label={t.wa.openLabel}
+    >
+      {t.footer.whatsapp}
+    </a>
+    <p>{site.year}</p>
+  </div>
+</footer>

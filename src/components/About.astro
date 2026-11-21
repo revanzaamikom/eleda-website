@@ -1,0 +1,39 @@
+---
+import { ui } from '../i18n/ui';
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+---
+
+<section class="section" id="about" aria-labelledby="about-title">
+  <div class="shell">
+    <div class="section-head">
+      <h2 class="section-title" id="about-title">{t.about.title}</h2>
+    </div>
+
+    <p class="about-body">{t.about.body}</p>
+
+    <div class="artists">
+      <div class="category-head">
+        <h3 class="category-heading">{t.artists.title}</h3>
+      </div>
+      <p class="about-body">{t.artists.sub}</p>
+      <ul class="artist-list">
+        {
+          t.artists.handles.map((artist) => (
+            <li>
+              <a href={artist.url} target="_blank" rel="noopener noreferrer">
+                {artist.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>

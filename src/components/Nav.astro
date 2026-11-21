@@ -1,0 +1,45 @@
+---
+import { site } from '../data/site';
+import { ui, waLink } from '../i18n/ui';
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+const wa = waLink(lang);
+---
+
+<header class="nav">
+  <div class="shell nav__inner">
+    <a class="nav__brand" href={t.path} aria-label={t.nav.home}>{site.name}</a>
+
+    <nav class="nav__links" aria-label={t.nav.label}>
+      <a href="#work">{t.nav.work}</a>
+      <a href="#about">{t.nav.about}</a>
+      <a href="#process">{t.nav.process}</a>
+      <a href="#faq">{t.nav.faq}</a>
+    </nav>
+
+    <div class="nav__actions">
+      <div class="lang" role="group" aria-label={t.nav.langLabel}>
+        <a href={ui.id.path} data-lang-toggle aria-current={lang === 'id' ? 'page' : undefined}>ID</a>
+        <span class="lang__sep" aria-hidden="true">/</span>
+        <a href={ui.en.path} data-lang-toggle aria-current={lang === 'en' ? 'page' : undefined}>EN</a>
+      </div>
+
+      <a
+        class="btn btn--primary btn--small"
+        href={wa}
+        target="_blank"
+        rel="noopener"
+        data-wa
+        data-wa-location="nav"
+      >
+        {t.nav.whatsapp}
+      </a>
+    </div>
+  </div>
+</header>

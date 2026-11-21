@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.astro/
+.riff/
+assets-source/
+.env
+.env.*
+!.env.example

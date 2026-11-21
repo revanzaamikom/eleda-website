@@ -1,0 +1,62 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../../components/Nav.astro';
+import Hero from '../../components/Hero.astro';
+import WorkGrid from '../../components/WorkGrid.astro';
+import ClientWork from '../../components/ClientWork.astro';
+import Process from '../../components/Process.astro';
+import Faq from '../../components/Faq.astro';
+import About from '../../components/About.astro';
+import FinalCta from '../../components/FinalCta.astro';
+import Footer from '../../components/Footer.astro';
+import FloatingCta from '../../components/FloatingCta.astro';
+import { visibleFaqs } from '../../data/faqs';
+import { ui } from '../../i18n/ui';
+
+const t = ui.id;
+
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: visibleFaqs.map((item) => ({
+    '@type': 'Question',
+    name: item.question.id,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.answer.id,
+    },
+  })),
+};
+---
+
+<BaseLayout
+  lang="id"
+  title={t.meta.title}
+  description={t.meta.description}
+  path="/id/"
+  ogImage="/og-id.png"
+  ogAlt={t.meta.ogAlt}
+  extraJsonLd={faqJsonLd}
+>
+  <Nav lang="id" />
+
+  <main id="main">
+    <Hero lang="id" />
+
+    <div class="statement">
+      <div class="shell">
+        <p>{t.statement}</p>
+      </div>
+    </div>
+
+    <WorkGrid lang="id" />
+    <ClientWork lang="id" />
+    <Process lang="id" />
+    <Faq lang="id" />
+    <About lang="id" />
+    <FinalCta lang="id" />
+  </main>
+
+  <Footer lang="id" />
+  <FloatingCta lang="id" />
+</BaseLayout>

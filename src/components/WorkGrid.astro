@@ -1,0 +1,68 @@
+---
+import { catalogCategories } from '../data/works';
+import { ui, waLink } from '../i18n/ui';
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+const labels = t.categories;
+const railLabel = lang === 'id' ? 'Geser untuk lihat karya lain' : 'Scroll to see more work';
+---
+
+<section class="section" id="work" aria-labelledby="work-title">
+  <div class="shell">
+    <div class="section-head">
+      <h2 class="section-title" id="work-title">{t.work.title}</h2>
+    </div>
+
+    {
+      catalogCategories.map((group) => (
+        <div class="category-block" id={group.id}>
+          <div class="category-head">
+            <h3 class="category-heading">{labels[group.id][lang]}</h3>
+            <span class="category-count">{group.works.length} {t.work.count[lang]}</span>
+          </div>
+
+          <p class="category-description">{labels[group.id].description[lang]}</p>
+
+          <a
+            class="btn btn--small category-cta"
+            href={waLink(lang, group.id)}
+            target="_blank"
+            rel="noopener"
+            data-wa
+            data-wa-location={`catalog-${group.id}`}
+          >
+            {t.hero.primary}
+          </a>
+
+          <div class="work-rail" role="region" tabindex="0" aria-label={`${labels[group.id][lang]}, ${railLabel}`}>
+            {group.works.map((work) => (
+              <figure class="work-card">
+                <div class="work-card__frame">
+                  <img
+                    class="work-card__media"
+                    src={work.image}
+                    alt={work.alt[lang]}
+                    width={work.width}
+                    height={work.height}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <figcaption class="work-card__caption">
+                  <span class="work-card__name">{work.title[lang]}</span>
+                  <span class="work-card__meta">{String(work.year)}</span>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>

@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Footer from '../components/Footer.astro';
+import FloatingCta from '../components/FloatingCta.astro';
+import { ui } from '../i18n/ui';
+
+const t = ui.en;
+---
+
+<BaseLayout
+  lang="en"
+  title="Page not found | Eleda"
+  description={t.notFound.body}
+  path="/404"
+  ogImage="/og-en.png"
+  ogAlt={t.meta.ogAlt}
+  noindex
+>
+  <main class="shell notfound" id="main">
+    <p class="notfound__code">404</p>
+    <h1 class="notfound__title">{t.notFound.title}</h1>
+    <p class="notfound__body">{t.notFound.body}</p>
+    <p class="notfound__alt" lang="id">{t.notFound.altTitle}</p>
+    <div class="notfound__actions">
+      <a class="btn btn--primary" href="/">{t.notFound.home}</a>
+    </div>
+  </main>
+
+  <Footer lang="en" />
+  <FloatingCta lang="en" />
+</BaseLayout>

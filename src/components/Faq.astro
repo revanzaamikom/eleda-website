@@ -1,0 +1,36 @@
+---
+import { visibleFaqs } from '../data/faqs';
+import { ui } from '../i18n/ui';
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+---
+
+<section class="section" id="faq" aria-labelledby="faq-title">
+  <div class="shell">
+    <div class="section-head">
+      <h2 class="section-title" id="faq-title">{t.faq.title}</h2>
+    </div>
+
+    <div class="faq">
+      {
+        visibleFaqs.map((item) => (
+          <details>
+            <summary>
+              <span>{item.question[lang]}</span>
+              <span class="faq__icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq__answer">
+              <p>{item.answer[lang]}</p>
+            </div>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
