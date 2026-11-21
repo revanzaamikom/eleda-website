@@ -113,7 +113,7 @@ Toggle bahasa: `ID` dan `EN`.
 - Tiga grup: `@jinx_archives`, `@foco.locoo`, `@lamthiur`.
 - Caption: `Commission` dan `2026`.
 - Nama klien dipakai sebagai judul. Tidak ada kutipan atau foto profil.
-- Handle grup klien ditampilkan sebagai teks, bukan tautan.
+- Handle grup klien jadi tautan Instagram langsung, dengan `target="_blank"` dan `rel="noopener noreferrer"`.
 
 ---
 

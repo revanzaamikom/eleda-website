@@ -421,6 +421,19 @@
     font-size: 0.9375rem;
   }
 
+  .category-heading a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: var(--color-line);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+    transition: text-decoration-color 150ms ease;
+  }
+
+  .category-heading a:hover {
+    text-decoration-color: var(--color-ink);
+  }
+
   .artist-list a {
     color: var(--color-ink);
     text-decoration: underline;

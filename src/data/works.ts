@@ -290,7 +290,8 @@ const catalogLogo: Work[] = clientLogoWorks;
 
 export type ClientGroup = {
   id: string;
-  label: { id: string; en: string };
+  label: string;
+  url: string;
   works: Work[];
 };
 
@@ -416,7 +417,7 @@ export const catalogCategories: { id: Category; works: Work[] }[] = [
 ];
 
 export const clientGroups: ClientGroup[] = [
-  { id: 'jinx-archives', label: { id: '@jinx_archives', en: '@jinx_archives' }, works: clientJinx },
-  { id: 'foco-locoo', label: { id: '@foco.locoo', en: '@foco.locoo' }, works: clientFoco },
-  { id: 'lamthiur', label: { id: '@lamthiur', en: '@lamthiur' }, works: clientLamthiur },
+  { id: 'jinx-archives', label: '@jinx_archives', url: 'https://www.instagram.com/jinx_archives/', works: clientJinx },
+  { id: 'foco-locoo', label: '@foco.locoo', url: 'https://www.instagram.com/foco.locoo/', works: clientFoco },
+  { id: 'lamthiur', label: '@lamthiur', url: 'https://www.instagram.com/lamthiur/', works: clientLamthiur },
 ];

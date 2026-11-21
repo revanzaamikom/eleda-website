@@ -23,11 +23,13 @@ const railLabel = lang === 'id' ? 'Geser untuk lihat karya lain' : 'Scroll to se
       clientGroups.map((group) => (
         <div class="category-block">
           <div class="category-head">
-            <h3 class="category-heading">{group.label[lang]}</h3>
+            <h3 class="category-heading">
+              <a href={group.url} target="_blank" rel="noopener noreferrer">{group.label}</a>
+            </h3>
             <span class="category-count">{group.works.length} {t.work.count[lang]}</span>
           </div>
 
-          <div class="work-rail" role="region" tabindex="0" aria-label={`${group.label[lang]}, ${railLabel}`}>
+          <div class="work-rail" role="region" tabindex="0" aria-label={`${group.label}, ${railLabel}`}>
             {group.works.map((work) => (
               <figure class="work-card">
                 <div class="work-card__frame">

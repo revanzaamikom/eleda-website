@@ -200,7 +200,7 @@ Aturan tambahan:
 
 - Tiap blok katalog punya heading, jumlah karya, satu paragraf pendek, dan satu CTA WhatsApp dengan pesan sesuai kategori.
 - Paragraf memakai Newsreader, maksimal 60ch, warna `muted`.
-- Handle Our Artist ditampilkan sebagai tautan Instagram langsung, target baru, `rel="noopener noreferrer"`.
+- Handle Our Artist dan grup klien ditampilkan sebagai tautan Instagram langsung, target baru, `rel="noopener noreferrer"`.
 
 ### Accordion FAQ
 

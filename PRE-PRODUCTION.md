@@ -251,7 +251,7 @@ Tidak ada folder `src/content`. Data cukup berupa file TypeScript.
 - [x] 3 blok katalog punya heading, jumlah, narasi, dan CTA WhatsApp.
 - [x] Tentang dan Our Artist tampil dengan tautan Instagram `@wrmdewa`, `@kytk._`, `@suryawisesa_` yang terbuka di tab baru.
 - [x] Floating CTA tampil di kanan bawah, outline hitam, dan memakai pesan sesuai bahasa.
-- [x] Handle klien dipakai sebagai judul grup. Nama dan identitas Revanzart tidak muncul.
+- [x] Handle klien dipakai sebagai judul grup dan tautan Instagram langsung. Nama dan identitas Revanzart tidak muncul.
 - [x] Semua tombol WhatsApp outline hitam, teks hitam. Tidak ada tombol hijau.
 - [x] Teks status tetap ada tanpa titik atau ikon hijau.
 - [x] Semua tombol WhatsApp membuka nomor benar dengan pesan sesuai bahasa dan kategori.
